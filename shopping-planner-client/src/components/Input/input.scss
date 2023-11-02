@@ -1,0 +1,23 @@
+.form-input-element {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  @include mq(phone, min) {
+    width: 100%;
+  }
+
+  input {
+    padding: 10px 16px;
+    border: 1px solid $clr-secondary;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+  }
+
+  &__error {
+    color: red;
+    font-size: 14px;
+  }
+}

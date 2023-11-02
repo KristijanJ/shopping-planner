@@ -1,0 +1,39 @@
+.shop-item {
+  padding: 10px 16px;
+  border: 1px solid $clr-grey;
+  border-radius: 4px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+  }
+
+  &__action {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__completed {
+    text-decoration: line-through;
+  }
+
+  &__checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    input {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+/* Import the TTF font files */
+@font-face {
+  font-family: "OneSans";
+  src: url("../../fonts/AROneSans-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "OneSans";
+  src: url("../../fonts/AROneSans-Medium.ttf") format("truetype");
+  font-weight: 500; /* Use the appropriate weight value for "medium" */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "OneSans";
+  src: url("../../fonts/AROneSans-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "OneSans";
+  src: url("../../fonts/AROneSans-SemiBold.ttf") format("truetype");
+  font-weight: 600; /* Use the appropriate weight value for "semibold" */
+  font-style: normal;
+}

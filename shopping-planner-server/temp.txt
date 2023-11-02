@@ -1,0 +1,5 @@
+ENV_NAME=prod \
+CERTIFICATE_ID=XXX \
+DOMAIN_NAME=XXX \
+FROM_EMAIL=XXX \
+cdk diff --profile XXX
