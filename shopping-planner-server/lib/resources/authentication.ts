@@ -39,8 +39,7 @@ export class Authentication {
           <p>A new user account has been created for you.</p>
           <p>Please visit the <a href="https://${process.env.DOMAIN_NAME}" target="_blank">Shopping List App Dashboard</a> and use the details below to finish the setup of your account and choose your own password.</p>
           <p>Your username: {username}</p>
-          <p>Your temporary password: <b>{####}</b></p>
-          <p>Best regards,<br> /The Redeal team<br></p>`,
+          <p>Your temporary password: <b>{####}</b></p>`,
           emailSubject: "Welcome to Shopping Lists App",
           smsMessage:
             "Your username is {username} and temporary password is {####}",
