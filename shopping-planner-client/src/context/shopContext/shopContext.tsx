@@ -2,10 +2,12 @@ import { createContext, ReactNode, useContext, useState } from "react";
 import { CognitoUserSession } from "amazon-cognito-identity-js";
 
 import {
-  // shopListItems,
+  shopListItems,
   ShopListItemInterface,
 } from "../../services/temp/shoppingListItems";
 import { useAuth } from "../authContext/authContext";
+
+const disableFetch = import.meta.env.MODE === "development";
 
 interface ShopContextInterface {
   shoppingLists: ShopListItemInterface[];
@@ -39,30 +41,38 @@ export const ShoppingProvider = ({ children }: { children: ReactNode }) => {
     });
 
   const getShoppingLists = async () => {
-    try {
-      const res = await fetch(`${import.meta.env.VITE_LISTS_API}/prod/lists`, {
-        headers: {
-          Authorization: `Bearer ${getAuthToken()}`,
-        },
-      });
-      const shoppingLists = (await res.json()) as ShopListItemInterface[];
-      setShoppingLists(shoppingLists);
-    } catch (error) {
-      console.log(error);
+    if (disableFetch) {
+      setShoppingLists(shopListItems);
+    } else {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_LISTS_API}/prod/lists`,
+          {
+            headers: {
+              Authorization: `Bearer ${getAuthToken()}`,
+            },
+          }
+        );
+        const shoppingLists = (await res.json()) as ShopListItemInterface[];
+        setShoppingLists(shoppingLists);
+      } catch (error) {
+        console.log(error);
+      }
     }
-    // setShoppingLists(shopListItems);
     setListsFetched(true);
   };
 
   const addShoppingList = async (newList: ShopListItemInterface) => {
     try {
-      await fetch(`${import.meta.env.VITE_LISTS_API}/prod/list/new`, {
-        method: "POST",
-        body: JSON.stringify(newList),
-        headers: {
-          Authorization: `Bearer ${getAuthToken()}`,
-        },
-      });
+      if (!disableFetch) {
+        await fetch(`${import.meta.env.VITE_LISTS_API}/prod/list/new`, {
+          method: "POST",
+          body: JSON.stringify(newList),
+          headers: {
+            Authorization: `Bearer ${getAuthToken()}`,
+          },
+        });
+      }
       setShoppingLists([...shoppingLists, newList]);
     } catch (error) {
       console.log(error);
@@ -71,12 +81,14 @@ export const ShoppingProvider = ({ children }: { children: ReactNode }) => {
 
   const removeShoppingList = async (listId: string) => {
     try {
-      await fetch(`${import.meta.env.VITE_LISTS_API}/prod/list/${listId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${getAuthToken()}`,
-        },
-      });
+      if (!disableFetch) {
+        await fetch(`${import.meta.env.VITE_LISTS_API}/prod/list/${listId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${getAuthToken()}`,
+          },
+        });
+      }
 
       const newLists = shoppingLists.filter((list) => list.listId !== listId);
       setShoppingLists(newLists);
@@ -87,16 +99,18 @@ export const ShoppingProvider = ({ children }: { children: ReactNode }) => {
 
   const updateShoppingList = async (newList: ShopListItemInterface) => {
     try {
-      await fetch(
-        `${import.meta.env.VITE_LISTS_API}/prod/list/${newList.listId}`,
-        {
-          method: "POST",
-          body: JSON.stringify(newList),
-          headers: {
-            Authorization: `Bearer ${getAuthToken()}`,
-          },
-        }
-      );
+      if (!disableFetch) {
+        await fetch(
+          `${import.meta.env.VITE_LISTS_API}/prod/list/${newList.listId}`,
+          {
+            method: "POST",
+            body: JSON.stringify(newList),
+            headers: {
+              Authorization: `Bearer ${getAuthToken()}`,
+            },
+          }
+        );
+      }
 
       setShoppingLists(
         shoppingLists.map((list) => {
