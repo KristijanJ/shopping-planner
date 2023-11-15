@@ -21,6 +21,7 @@ import { AnimatePresence, Reorder } from "framer-motion";
 import { useAuth } from "../../context/authContext/authContext";
 import TrashDecoration from "../../components/Decorations/Icons/TrashDecoration";
 import { debounce } from "../../services/utils";
+import Modal from "../../components/Modal/Modal";
 
 export default function ShoppingList() {
   const shopping = useShopping();
@@ -46,6 +47,7 @@ export default function ShoppingList() {
     title: "",
     completed: false,
   });
+  const [displayDeleteListModal, setDisplayDeleteListModal] = useState(false);
 
   useEffect(() => {
     if (!shopping.listsFetched) {
@@ -156,7 +158,10 @@ export default function ShoppingList() {
               error={listError}
               onChange={handleListTitleChange}
             />
-            <button className="btn btn-danger" onClick={handleDeleteList}>
+            <button
+              className="btn btn-danger"
+              onClick={() => setDisplayDeleteListModal(true)}
+            >
               <TrashDecoration fill="#ffffff" />
             </button>
           </div>
@@ -213,6 +218,16 @@ export default function ShoppingList() {
               </div>
             </div>
           </div>
+
+          {displayDeleteListModal && (
+            <Modal
+              contentAlign="center"
+              onCancelClick={() => setDisplayDeleteListModal(false)}
+              onContinueClick={handleDeleteList}
+            >
+              {`Are you sure you want to delete ${singleList.title}?`}
+            </Modal>
+          )}
         </>
       ) : (
         <div>Loading...</div>
