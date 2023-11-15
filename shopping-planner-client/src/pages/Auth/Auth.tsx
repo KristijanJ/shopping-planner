@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import PageLayout from "../../layouts/PageLayout/PageLayout";
 import "./auth.scss";
-import { ChangeEvent, useState } from "react";
+import { BaseSyntheticEvent, ChangeEvent, useState } from "react";
 import { useAuth } from "../../context/authContext/authContext";
 import Input from "../../components/Input/Input";
 
@@ -52,9 +52,15 @@ export default function Auth(props: Props) {
     setLocalUser({ ...localUser, [e.target.id]: e.target.value });
   };
 
+  const handleFormKeyDown = (e: BaseSyntheticEvent<{ key: string }>) => {
+    if (e.nativeEvent.key === "Enter") {
+      handleAuthentication();
+    }
+  };
+
   return (
     <PageLayout className="auth-page">
-      <div className="auth-page__container">
+      <div className="auth-page__container" onKeyDown={handleFormKeyDown}>
         <h3 className="auth-page__form-text">{title}</h3>
 
         {auth.isFirstLogin ? (

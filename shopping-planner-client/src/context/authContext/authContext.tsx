@@ -76,7 +76,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       user.authenticateUser(authDetails, {
         onSuccess: (result) => {
-          console.log("login successful");
           setUserAuth({
             ...userAuth,
             isFirstLogin: false,
@@ -90,7 +89,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           reject(err);
         },
         newPasswordRequired: (userAttrs) => {
-          console.log("new user");
           delete userAttrs.email_verified;
           delete userAttrs.email;
           setUserAuth({
